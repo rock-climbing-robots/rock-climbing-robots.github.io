@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rock Climbing Robots Workshop 2026</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <style>
+    :root {
+      --accent: #2c6e49;
+      --accent-light: #4c956c;
+      --dark: #1a1a2e;
+      --section-alt: #f8f9fa;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Georgia", "Times New Roman", serif;
+      color: #222;
+    }
+
+    /* ---- Hero ---- */
+    #hero {
+      background: linear-gradient(135deg, var(--dark) 0%, #2c3e50 50%, var(--accent) 100%);
+      color: #fff;
+      padding: 100px 0 80px;
+      text-align: center;
+    }
+    #hero .badge-event {
+      background: var(--accent-light);
+      font-family: sans-serif;
+      font-size: .85rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: .4em .9em;
+      border-radius: 20px;
+    }
+    #hero h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin: .4em 0 .2em;
+    }
+    #hero .subtitle {
+      font-size: 1.15rem;
+      opacity: .85;
+      margin-bottom: 1.5rem;
+    }
+    #hero .hero-dates {
+      font-family: sans-serif;
+      font-size: 1rem;
+      background: rgba(255,255,255,.12);
+      display: inline-block;
+      padding: .5em 1.4em;
+      border-radius: 30px;
+      margin-top: .5rem;
+    }
+    #hero .hero-dates i { margin-right: .4em; }
+
+    /* ---- Section headings ---- */
+    .section-title {
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--dark);
+      border-left: 4px solid var(--accent);
+      padding-left: .6em;
+      margin-bottom: 1.2rem;
+    }
+
+    /* ---- Keyword badges ---- */
+    .kw-badge {
+      background: #e9f5ee;
+      color: var(--accent);
+      border: 1px solid #b7dfc7;
+      font-family: sans-serif;
+      font-size: .78rem;
+      padding: .25em .7em;
+      border-radius: 20px;
+      margin: .15em;
+      display: inline-block;
+    }
+
+    /* ---- Hackathon objective cards ---- */
+    .obj-card {
+      border: none;
+      border-top: 3px solid var(--accent);
+      border-radius: 0 0 .5rem .5rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,.07);
+    }
+    .obj-icon { font-size: 2rem; color: var(--accent); }
+
+    /* ---- Timeline ---- */
+    .timeline { position: relative; padding-left: 1.5rem; }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: .45rem;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: var(--accent-light);
+    }
+    .timeline-item { position: relative; margin-bottom: 1.4rem; }
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -1.08rem;
+      top: .35rem;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 2px var(--accent);
+    }
+    .timeline-date {
+      font-family: sans-serif;
+      font-size: .85rem;
+      color: var(--accent);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+
+    /* ---- Organizer logos ---- */
+    .org-logo {
+      max-height: 60px;
+      max-width: 160px;
+      object-fit: contain;
+      filter: grayscale(20%);
+      transition: filter .2s;
+    }
+    .org-logo:hover { filter: grayscale(0%); }
+    .org-card { border: none; box-shadow: 0 2px 10px rgba(0,0,0,.07); border-radius: .5rem; }
+
+    /* ---- Map ---- */
+    .map-wrapper { border-radius: .5rem; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,.12); }
+
+    /* ---- Media placeholder ---- */
+    .media-placeholder {
+      background: #e9ecef;
+      border-radius: .5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6c757d;
+      font-family: sans-serif;
+      font-size: .9rem;
+      min-height: 200px;
+    }
+
+    /* ---- Footer ---- */
+    footer {
+      background: var(--dark);
+      color: rgba(255,255,255,.6);
+      font-family: sans-serif;
+      font-size: .85rem;
+    }
+
+    section { padding: 70px 0; }
+    section:nth-child(even) { background: var(--section-alt); }
+  </style>
+</head>
+<body>
+
+<!-- ================================================================ HERO -->
+<section id="hero" style="padding-top:100px; padding-bottom:80px; background: linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.55)), url('images/smart_climbing_wall.webp') center/cover no-repeat;">
+  <div class="container text-center">
+    <span class="badge-event">International Workshop &mdash; RCR-WS-2026</span>
+    <h1 class="mt-3">Rock Climbing Robots Workshop</h1>
+    <p class="subtitle">Motion Planning &bull; Multi-Contact Control &bull; Generative AI &bull; Humanoid Robotics</p>
+    <div class="hero-dates">
+      <i class="bi bi-calendar-event"></i>
+      <strong>28 October &ndash; 1 November 2026</strong>
+      &nbsp;&bull;&nbsp;
+      <i class="bi bi-geo-alt"></i>
+      Bordeaux, France &mdash; SMART Facility
+    </div>
+    <div class="mt-4 d-flex justify-content-center gap-3 flex-wrap">
+      <a href="#hackathon" class="btn btn-success px-4">Hackathon</a>
+      <a href="#participate" class="btn btn-outline-light px-4">Call for Participation</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ MOTIVATION -->
+<section id="motivation">
+  <div class="container">
+    <div class="row gy-4 align-items-center mb-5">
+      <div class="col-12">
+        <h2 class="section-title">About the Workshop</h2>
+        <p>
+          Despite rapid progress in humanoid robotics, <strong>complex multi-contact motion planning</strong>
+          for highly dynamic tasks remains a fundamental challenge. This workshop explores the intersection of
+          <strong>generative AI</strong> (diffusion models &amp; transformers) for high-level contact planning
+          and <strong>reinforcement learning</strong> for whole-body control, using <em>rock climbing</em> as
+          a challenging benchmark.
+        </p>
+        <div class="mt-3">
+          <span class="kw-badge">Contact Planning</span>
+          <span class="kw-badge">Whole-Body Control</span>
+          <span class="kw-badge">Diffusion Models</span>
+          <span class="kw-badge">Reinforcement Learning</span>
+          <span class="kw-badge">Humanoid Climbing</span>
+          <span class="kw-badge">Multi-Contact Robotics</span>
+          <span class="kw-badge">Legged Locomotion</span>
+          <span class="kw-badge">Generative AI</span>
+        </div>
+      </div>
+    </div>
+    <div class="row gy-4 align-items-start">
+      <div class="col-lg-8">
+        <h5 class="fw-bold mb-3">Curriculum Overview</h5>
+        <div class="ratio ratio-16x9 rounded shadow-sm overflow-hidden">
+          <video autoplay muted loop playsinline>
+            <source src="videos/curriculum.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <h5 class="fw-bold mb-3">Climbing Demo</h5>
+        <div class="d-flex justify-content-center justify-content-lg-start">
+          <div class="rounded shadow-sm overflow-hidden" style="width:100%; max-width:270px; aspect-ratio:9/16;">
+            <video autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover;">
+              <source src="videos/climbing_portrait.mp4" type="video/mp4" />
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ HACKATHON -->
+<section id="hackathon">
+  <div class="container">
+    <h2 class="section-title">Hackathon</h2>
+    <p class="lead mb-2">
+      The goal of the Hackathon is to <strong>climb small walls using humanoid-shaped robots</strong>.
+    </p>
+    <p class="mb-4">
+      The three challenges below can be tackled <strong>independently</strong> &mdash; teams are free to focus
+      on any single challenge or combine several of them.
+    </p>
+
+    <div class="row g-4 mb-5">
+      <div class="col-12">
+        <div class="card obj-card p-4">
+          <div class="row align-items-center">
+            <div class="col-auto"><div class="obj-icon"><i class="bi bi-eye"></i></div></div>
+            <div class="col">
+              <h5 class="fw-bold mb-1">Challenge 1 &mdash; Perception</h5>
+              <p class="text-muted mb-0" style="font-family:sans-serif; font-size:.95rem;">
+                Build a 3D model of the climbing wall and estimate the robot's pose in real time.
+                Can be addressed independently of planning and control.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="card obj-card p-4">
+          <div class="row align-items-center">
+            <div class="col-auto"><div class="obj-icon"><i class="bi bi-diagram-3"></i></div></div>
+            <div class="col">
+              <h5 class="fw-bold mb-1">Challenge 2 &mdash; Planning</h5>
+              <p class="text-muted mb-0" style="font-family:sans-serif; font-size:.95rem;">
+                Generate a feasible path and contact sequence for climbing the wall.
+                Fiducial markers can be used so perception is not required.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="card obj-card p-4">
+          <div class="row align-items-center">
+            <div class="col-auto"><div class="obj-icon"><i class="bi bi-cpu"></i></div></div>
+            <div class="col">
+              <h5 class="fw-bold mb-1">Challenge 3 &mdash; Control</h5>
+              <p class="text-muted mb-0" style="font-family:sans-serif; font-size:.95rem;">
+                Whole-body execution of the planned motion on a physical robot platform.
+                A pre-computed contact plan can be provided so planning is not required.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row gy-4 align-items-center">
+      <div class="col-lg-4 col-md-5 text-center">
+        <img src="images/prototype.jpg" alt="Climbing robot prototype" class="img-fluid rounded shadow" style="max-height:280px; width:auto;" />
+        <p class="text-muted mt-2" style="font-family:sans-serif; font-size:.82rem;">
+          Climbing robot prototype developed by the organizers.
+        </p>
+      </div>
+      <div class="col-lg-8 col-md-7">
+        <h5 class="fw-bold mb-3">Practical Information</h5>
+        <ul class="list-unstyled" style="font-family:sans-serif; line-height:2;">
+          <li><i class="bi bi-check-circle-fill text-success me-2"></i>A simulator will be released by the organizers (date T.B.D.)</li>
+          <li><i class="bi bi-check-circle-fill text-success me-2"></i>A small-size robotic platform will be provided</li>
+          <li><i class="bi bi-check-circle-fill text-success me-2"></i>Fiducial markers available &mdash; teams can skip perception and focus on planning &amp; control</li>
+          <li><i class="bi bi-hourglass-split text-warning me-2"></i>Official rules are currently being written</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================================================================ CALL FOR PARTICIPATION -->
+<section id="participate">
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-lg-6">
+        <h2 class="section-title">Call for Participation</h2>
+        <p>We welcome all students and researchers interested in robotics and/or AI, regardless of experience level.</p>
+        <h6 class="fw-bold mt-4 mb-2" style="font-family:sans-serif;">Who should attend?</h6>
+        <ul style="font-family:sans-serif;">
+          <li>Undergraduate &amp; graduate students in Robotics, AI, CS, Mechanical Engineering</li>
+          <li>PhD students and postdocs working on motion planning, control, or perception</li>
+          <li>Anyone passionate about humanoid robotics and climbing challenges</li>
+        </ul>
+        <h6 class="fw-bold mt-4 mb-2" style="font-family:sans-serif;">Practical details</h6>
+        <ul style="font-family:sans-serif;">
+          <li>Standard robotic platforms will be available on-site</li>
+          <li>Participants are welcome to bring their own robot</li>
+          <li>On-site accommodation available at the SMART facility</li>
+        </ul>
+      </div>
+      <div class="col-lg-6 d-flex align-items-center">
+        <div class="card border-0 shadow-sm p-4 w-100" style="background:#e9f5ee; border-radius:.75rem;">
+          <h5 class="fw-bold mb-1" style="color:var(--accent);"><i class="bi bi-envelope-fill me-2"></i>Contact &amp; Registration</h5>
+          <p style="font-family:sans-serif; font-size:.95rem;" class="mb-2">
+            Interested in joining? Send us an email or subscribe to the mailing list for updates on registration, the simulator release, and the official rules.
+          </p>
+          <a href="mailto:rock-climbing-robots@diff.u-bordeaux.fr" class="btn btn-success">
+            <i class="bi bi-envelope me-1"></i> Get in Touch
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ VENUE -->
+<section id="venue">
+  <div class="container">
+    <h2 class="section-title">Venue</h2>
+    <div class="row gy-4 align-items-start">
+      <div class="col-lg-5">
+        <h5 class="fw-bold" style="font-family:sans-serif;">SMART Facility &mdash; University of Bordeaux</h5>
+        <p>
+          The workshop is held at the <strong>SMART</strong> (Sport, Motion, Arts &amp; Research Technology)
+          sports science research facility in Bordeaux, France. The site features a full motion capture
+          studio, force platforms, and an indoor climbing wall &mdash; ideal for human climbing data
+          collection and robot experimentation.
+        </p>
+        <p style="font-family:sans-serif; font-size:.9rem;" class="text-muted">
+          <i class="bi bi-geo-alt-fill me-1"></i>
+          Complexe sportif SMART, Bordeaux, France
+        </p>
+        <img src="images/smart.jpg" alt="SMART Facility, Bordeaux" class="img-fluid rounded shadow mt-3" />
+      </div>
+      <div class="col-lg-7">
+        <div class="map-wrapper">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1724.857929676092!2d-0.616091392533439!3d44.79355061859096!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd54d90079dfa9cf%3A0x8de73dced489b8f6!2sComplexe%20sportif%20SMART!5e1!3m2!1sfr!2sfr!4v1779263699475!5m2!1sfr!2sfr" width="100%" height="380" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Complexe sportif SMART, Bordeaux"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ SCHEDULE -->
+<section id="schedule">
+  <div class="container">
+    <h2 class="section-title">Schedule</h2>
+    <div class="row">
+      <div class="col-lg-7">
+        <div class="timeline">
+          <div class="timeline-item">
+            <p class="timeline-date mb-0">Wednesday, 28 October 2026</p>
+            <h6 class="fw-bold mb-1">Welcome &amp; Evening Reception</h6>
+            <p class="text-muted" style="font-family:sans-serif; font-size:.9rem; margin:0;">
+              Arrival of participants, welcome reception.
+            </p>
+          </div>
+          <div class="timeline-item">
+            <p class="timeline-date mb-0">Thursday 29 &ndash; Saturday 31 October 2026</p>
+            <h6 class="fw-bold mb-1">Rock Climbing Hackathon</h6>
+            <p class="text-muted" style="font-family:sans-serif; font-size:.9rem; margin:0;">
+              Three days of intensive team work on perception, planning, and control challenges.
+              Live testing sessions on the climbing wall.
+            </p>
+          </div>
+          <div class="timeline-item">
+            <p class="timeline-date mb-0">Sunday, 1 November 2026</p>
+            <h6 class="fw-bold mb-1">Closing Day</h6>
+            <p class="text-muted" style="font-family:sans-serif; font-size:.9rem; margin:0;">
+              Morning debriefing, final demos, and <strong>Hackathon Trophies</strong> ceremony.
+              End of event.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5 d-flex align-items-center">
+        <div class="p-4 rounded" style="background:#e9f5ee; width:100%;">
+          <h6 class="fw-bold" style="color:var(--accent); font-family:sans-serif;">At a Glance</h6>
+          <table class="table table-borderless mb-0" style="font-family:sans-serif; font-size:.9rem;">
+            <tbody>
+              <tr><td><i class="bi bi-calendar-check me-1 text-success"></i><strong>Start</strong></td><td>28 Oct 2026</td></tr>
+              <tr><td><i class="bi bi-trophy me-1 text-warning"></i><strong>Hackathon</strong></td><td>29–31 Oct 2026</td></tr>
+              <tr><td><i class="bi bi-flag me-1 text-danger"></i><strong>End</strong></td><td>1 Nov 2026</td></tr>
+              <tr><td><i class="bi bi-geo me-1 text-primary"></i><strong>Location</strong></td><td>Bordeaux, France</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ ORGANIZERS -->
+<section id="organizers">
+  <div class="container">
+    <h2 class="section-title">Organizers</h2>
+    <div class="row g-4">
+
+      <!-- NTNU -->
+      <div class="col-md-4">
+        <div class="card org-card p-4 h-100">
+          <div class="text-center mb-3">
+            <img src="logos/ntnu.svg" alt="National Taiwan Normal University" class="org-logo" />
+          </div>
+          <h6 class="fw-bold text-center mb-1" style="font-family:sans-serif;">National Taiwan Normal University</h6>
+          <p class="text-center text-muted mb-2" style="font-family:sans-serif; font-size:.82rem;">Taiwan &mdash; NTNU</p>
+          <ul class="list-unstyled text-center mb-0" style="font-family:sans-serif; font-size:.9rem;">
+            <li>Jacky Baltes</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- University of Bordeaux -->
+      <div class="col-md-4">
+        <div class="card org-card p-4 h-100">
+          <div class="text-center mb-3">
+            <img src="logos/university_bordeaux.jpg" alt="University of Bordeaux" class="org-logo" />
+          </div>
+          <h6 class="fw-bold text-center mb-1" style="font-family:sans-serif;">University of Bordeaux</h6>
+          <p class="text-center text-muted mb-2" style="font-family:sans-serif; font-size:.82rem;">France</p>
+          <ul class="list-unstyled text-center mb-0" style="font-family:sans-serif; font-size:.9rem;">
+            <li>Grégoire Passault</li>
+            <li>Clément Gaspard</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Ostfalia University -->
+      <div class="col-md-4">
+        <div class="card org-card p-4 h-100">
+          <div class="text-center mb-3">
+            <img src="logos/university_ostfalia.png" alt="Ostfalia University" class="org-logo" />
+          </div>
+          <h6 class="fw-bold text-center mb-1" style="font-family:sans-serif;">Ostfalia University</h6>
+          <p class="text-center text-muted mb-2" style="font-family:sans-serif; font-size:.82rem;">Germany</p>
+          <ul class="list-unstyled text-center mb-0" style="font-family:sans-serif; font-size:.9rem;">
+            <li>Reinhard Gerndt</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ FOOTER -->
+<footer class="py-4">
+  <div class="container text-center">
+    <p class="mb-1">Rock Climbing Robots Workshop 2026 &mdash; Bordeaux, France</p>
+    <p class="mb-0" style="font-size:.8rem;">
+      Organised by <a href="https://www.u-bordeaux.fr" class="text-light" target="_blank" rel="noopener">University of Bordeaux</a>,
+      <a href="https://www.ostfalia.de" class="text-light" target="_blank" rel="noopener">Ostfalia</a> &amp;
+      <a href="https://www.ntnu.edu.tw" class="text-light" target="_blank" rel="noopener">NTNU</a>
+    </p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
