@@ -152,6 +152,85 @@
       min-height: 200px;
     }
 
+    /* ---- Hardware progress card ---- */
+    .hw-progress {
+      background: #fff;
+      border: 1px solid #dbe9e0;
+      border-radius: .75rem;
+      overflow: hidden;
+      box-shadow: 0 4px 18px rgba(0,0,0,.08);
+    }
+    .hw-video {
+      position: relative;
+      height: 100%;
+      min-height: 220px;
+      background: #0f1a14;
+    }
+    .hw-video video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      aspect-ratio: 16 / 9;
+    }
+    .hw-video-tag {
+      position: absolute;
+      left: .7rem; bottom: .7rem;
+      background: rgba(0,0,0,.6);
+      color: #fff;
+      font-family: sans-serif;
+      font-size: .75rem;
+      letter-spacing: .3px;
+      padding: .3em .7em;
+      border-radius: 20px;
+      backdrop-filter: blur(4px);
+    }
+    .hw-video-tag i { margin-right: .35em; }
+    .hw-body { padding: 1.6rem 1.8rem; }
+    .hw-status {
+      display: inline-flex;
+      align-items: center;
+      gap: .5em;
+      font-family: sans-serif;
+      font-size: .72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent);
+      background: #e9f5ee;
+      border: 1px solid #b7dfc7;
+      padding: .3em .8em;
+      border-radius: 20px;
+    }
+    .hw-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent-light);
+      box-shadow: 0 0 0 0 rgba(76,149,108,.7);
+      animation: hw-pulse 2s infinite;
+    }
+    @keyframes hw-pulse {
+      0%   { box-shadow: 0 0 0 0 rgba(76,149,108,.7); }
+      70%  { box-shadow: 0 0 0 8px rgba(76,149,108,0); }
+      100% { box-shadow: 0 0 0 0 rgba(76,149,108,0); }
+    }
+    @media (prefers-reduced-motion: reduce) { .hw-dot { animation: none; } }
+    .hw-body h5 {
+      font-weight: 700;
+      color: var(--dark);
+      margin: .8rem 0 .6rem;
+    }
+    .hw-lead { font-size: 1.02rem; margin-bottom: .7rem; }
+    .hw-note {
+      font-family: sans-serif;
+      font-size: .9rem;
+      color: #6c757d;
+      margin-bottom: 1.1rem;
+    }
+    @media (max-width: 991.98px) {
+      .hw-body { padding: 1.3rem 1.2rem; }
+    }
+
     /* ---- Footer ---- */
     footer {
       background: var(--dark);
@@ -309,12 +388,33 @@
       </div>
     </div>
 
-    <div class="alert alert-success d-flex align-items-center mt-5 mb-0" role="alert" style="font-family:sans-serif;">
-      <i class="bi bi-tools me-3 fs-4"></i>
-      <div>
-        <strong>Hardware specifications coming soon.</strong>
-        Hardware specifications for the small climbing wall and the robotic platforms are
-        currently being designed and will be made available soon.
+    <div class="hw-progress mt-5">
+      <div class="row g-0">
+        <div class="col-lg-7">
+          <div class="hw-video">
+            <video autoplay muted loop playsinline preload="metadata" poster="images/microban_poster.jpg">
+              <source src="videos/compressed/microban_demo.mp4" type="video/mp4" />
+            </video>
+            <span class="hw-video-tag"><i class="bi bi-camera-reels-fill"></i>Microban in action</span>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="hw-body">
+            <span class="hw-status"><span class="hw-dot"></span>Hardware &mdash; in progress</span>
+            <h5>Hardware specifications</h5>
+            <p class="hw-lead mb-2">
+              <strong>Microban will be used as a base to design a climber for the Hackathon.</strong>
+            </p>
+            <p class="hw-note">
+              Specifications for the small climbing wall and the robotic platforms are still being
+              designed &mdash; they will be published here as soon as they are finalized.
+            </p>
+            <a href="https://github.com/Rhoban/microban" target="_blank" rel="noopener"
+               class="btn btn-outline-success btn-sm" style="font-family:sans-serif;">
+              <i class="bi bi-github me-1"></i> Rhoban/microban on GitHub
+            </a>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -440,7 +540,7 @@
     <div class="row g-4">
 
       <!-- NTNU -->
-      <div class="col-md-4">
+      <div class="col-md-6 col-lg-3">
         <div class="card org-card p-4 h-100">
           <div class="text-center mb-3">
             <img src="logos/ntnu.svg" alt="National Taiwan Normal University" class="org-logo" />
@@ -454,7 +554,7 @@
       </div>
 
       <!-- University of Bordeaux -->
-      <div class="col-md-4">
+      <div class="col-md-6 col-lg-3">
         <div class="card org-card p-4 h-100">
           <div class="text-center mb-3">
             <img src="logos/university_bordeaux.jpg" alt="University of Bordeaux" class="org-logo" />
@@ -469,7 +569,7 @@
       </div>
 
       <!-- Ostfalia University -->
-      <div class="col-md-4">
+      <div class="col-md-6 col-lg-3">
         <div class="card org-card p-4 h-100">
           <div class="text-center mb-3">
             <img src="logos/university_ostfalia.png" alt="Ostfalia University" class="org-logo" />
@@ -478,6 +578,20 @@
           <p class="text-center text-muted mb-2" style="font-family:sans-serif; font-size:.82rem;">Germany</p>
           <ul class="list-unstyled text-center mb-0" style="font-family:sans-serif; font-size:.9rem;">
             <li>Reinhard Gerndt</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Aquitaine Robotics -->
+      <div class="col-md-6 col-lg-3">
+        <div class="card org-card p-4 h-100">
+          <div class="text-center mb-3">
+            <img src="logos/aquitaine_robotics.svg" alt="Aquitaine Robotics" class="org-logo" />
+          </div>
+          <h6 class="fw-bold text-center mb-1" style="font-family:sans-serif;">Aquitaine Robotics</h6>
+          <p class="text-center text-muted mb-2" style="font-family:sans-serif; font-size:.82rem;">France &mdash; Companies cluster</p>
+          <ul class="list-unstyled text-center mb-0" style="font-family:sans-serif; font-size:.9rem;">
+            <li><a href="https://www.aquitaine-robotics.com" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;">aquitaine-robotics.com</a></li>
           </ul>
         </div>
       </div>
@@ -493,7 +607,8 @@
     <p class="mb-0" style="font-size:.8rem;">
       Organised by <a href="https://www.u-bordeaux.fr" class="text-light" target="_blank" rel="noopener">University of Bordeaux</a>,
       <a href="https://www.ostfalia.de" class="text-light" target="_blank" rel="noopener">Ostfalia</a> &amp;
-      <a href="https://www.ntnu.edu.tw" class="text-light" target="_blank" rel="noopener">NTNU</a>
+      <a href="https://www.ntnu.edu.tw" class="text-light" target="_blank" rel="noopener">NTNU</a>,
+      with the support of <a href="https://www.aquitaine-robotics.com" class="text-light" target="_blank" rel="noopener">Aquitaine Robotics</a>
     </p>
   </div>
 </footer>
