@@ -231,6 +231,29 @@
       .hw-body { padding: 1.3rem 1.2rem; }
     }
 
+    /* ---- Participants table ---- */
+    .participants { font-family: sans-serif; }
+    .participants table { margin-bottom: 0; min-width: 620px; }
+    .participants thead th {
+      font-size: .74rem;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      color: var(--accent);
+      border-bottom: 2px solid var(--accent-light);
+      white-space: nowrap;
+    }
+    .participants tbody td { font-size: .95rem; vertical-align: middle; }
+    .participants .flag {
+      width: 28px;
+      height: auto;
+      border: 1px solid rgba(0,0,0,.12);
+      border-radius: 2px;
+      margin-right: .6em;
+      vertical-align: -.15em;
+    }
+    .participants .col-country { width: 180px; white-space: nowrap; }
+    .participants .col-city { width: 160px; }
+
     /* ---- Footer ---- */
     footer {
       background: var(--dark);
@@ -470,6 +493,84 @@
             <i class="bi bi-envelope me-1"></i> Get in Touch
           </a>
         </div>
+      </div>
+    </div>
+
+    <div class="row mt-5">
+      <div class="col-12">
+        <h5 class="fw-bold mb-3">Participants</h5>
+        <div class="participants table-responsive">
+          <table class="table table-sm align-middle">
+            <thead>
+              <tr>
+                <th class="col-country">Country</th>
+                <th class="col-city">City</th>
+                <th>Structure</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="col-country">
+                  <img class="flag" src="https://flagcdn.com/w40/tw.png"
+                       srcset="https://flagcdn.com/w80/tw.png 2x" alt="Flag of Taiwan" width="28" />Taiwan
+                </td>
+                <td class="col-city">Taipei</td>
+                <td>National Taiwan Normal University (NTNU)</td>
+              </tr>
+              <tr>
+                <td class="col-country">
+                  <img class="flag" src="https://flagcdn.com/w40/de.png"
+                       srcset="https://flagcdn.com/w80/de.png 2x" alt="Flag of Germany" width="28" />Germany
+                </td>
+                <td class="col-city">Wolfenbüttel</td>
+                <td>Ostfalia University of Applied Sciences</td>
+              </tr>
+              <tr>
+                <td class="col-country">
+                  <img class="flag" src="https://flagcdn.com/w40/fr.png"
+                       srcset="https://flagcdn.com/w80/fr.png 2x" alt="Flag of France" width="28" />France
+                </td>
+                <td class="col-city">Talence</td>
+                <td>ENSEIRB-MATMECA, option Robotique Autonome (Team A)</td>
+              </tr>
+              <tr>
+                <td class="col-country">
+                  <img class="flag" src="https://flagcdn.com/w40/fr.png"
+                       srcset="https://flagcdn.com/w80/fr.png 2x" alt="Flag of France" width="28" />France
+                </td>
+                <td class="col-city">Talence</td>
+                <td>ENSEIRB-MATMECA, option Robotique Autonome (Team B)</td>
+              </tr>
+              <tr>
+                <td class="col-country">
+                  <img class="flag" src="https://flagcdn.com/w40/gb-sct.png"
+                       srcset="https://flagcdn.com/w80/gb-sct.png 2x" alt="Flag of Scotland" width="28" />Scotland
+                </td>
+                <td class="col-city">Edinburgh</td>
+                <td>University of Edinburgh</td>
+              </tr>
+              <tr>
+                <td class="col-country">
+                  <img class="flag" src="https://flagcdn.com/w40/fr.png"
+                       srcset="https://flagcdn.com/w80/fr.png 2x" alt="Flag of France" width="28" />France
+                </td>
+                <td class="col-city">Talence</td>
+                <td>Inria, Mnemosyne team</td>
+              </tr>
+              <tr>
+                <td class="col-country">
+                  <img class="flag" src="https://flagcdn.com/w40/fr.png"
+                       srcset="https://flagcdn.com/w80/fr.png 2x" alt="Flag of France" width="28" />France
+                </td>
+                <td class="col-city">Bordeaux</td>
+                <td>University of Bordeaux, DROBOTIQUE</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="text-muted mt-2 mb-0" style="font-family:sans-serif; font-size:.85rem;">
+          <i class="bi bi-people me-1"></i>This list is updated as registrations come in.
+        </p>
       </div>
     </div>
   </div>
