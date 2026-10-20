@@ -231,6 +231,44 @@
       .hw-body { padding: 1.3rem 1.2rem; }
     }
 
+    /* ---- Detailed schedule ---- */
+    .sched { font-family: sans-serif; }
+    .sched table { margin-bottom: 0; }
+    .sched .day-row td {
+      background: #e9f5ee;
+      color: var(--accent);
+      font-weight: 700;
+      font-size: .76rem;
+      text-transform: uppercase;
+      letter-spacing: .9px;
+      border-top: 2px solid var(--accent-light);
+      padding-top: .5rem;
+      padding-bottom: .5rem;
+    }
+    .sched td { vertical-align: top; font-size: .93rem; }
+    .sched .time {
+      width: 120px;
+      white-space: nowrap;
+      padding-right: 1rem;
+      font-weight: 600;
+      color: var(--dark);
+    }
+    .sched .ev-title { font-weight: 600; }
+    .sched .ev-note { display: block; color: #6c757d; font-size: .84rem; margin-top: .15rem; }
+    .sched .ev-logo {
+      height: 22px;
+      width: auto;
+      vertical-align: -.35em;
+      margin-left: .45em;
+    }
+    .sched .hack .ev-title { font-weight: 500; color: #4a5a52; }
+    .sched .hack .time { color: #6c757d; font-weight: 500; }
+
+    @media (max-width: 575.98px) {
+      .sched .time { width: 90px; font-size: .85rem; padding-right: .5rem; }
+      .sched td { font-size: .88rem; }
+    }
+
     /* ---- Participants table ---- */
     .participants { font-family: sans-serif; }
     .participants table { margin-bottom: 0; min-width: 620px; }
@@ -407,10 +445,10 @@
           <li><i class="bi bi-check-circle-fill text-success me-2"></i>A small-size robotic platform will be provided</li>
           <li><i class="bi bi-check-circle-fill text-success me-2"></i>Fiducial markers available &mdash; teams can skip perception and focus on planning &amp; control</li>
           <li>
-            <i class="bi bi-file-earmark-text-fill text-success me-2"></i>Rules released &mdash;
-            <a href="https://github.com/rock-climbing-robots/rules/releases/download/draft1/rcr-rules-draft1.pdf"
-               target="_blank" rel="noopener" class="fw-semibold" style="color:var(--accent);">read the draft rules (PDF)</a>
-            <span class="badge rounded-pill text-bg-warning ms-1" style="font-size:.7rem;">Draft 1</span>
+            <i class="bi bi-file-earmark-text-fill text-success me-2"></i>Official rules released:
+            <a href="https://github.com/rock-climbing-robots/rules/releases/download/v1/rcr-rules-v1.pdf"
+               target="_blank" rel="noopener" class="fw-semibold" style="color:var(--accent);">read the rules (PDF)</a>
+            <span class="badge rounded-pill text-bg-success ms-1" style="font-size:.7rem;">v1</span>
             <span class="text-muted" style="font-size:.85rem;">&middot;
               <a href="https://github.com/rock-climbing-robots/rules/releases" target="_blank" rel="noopener" class="text-muted">release history</a></span>
           </li>
@@ -608,41 +646,115 @@
 <section id="schedule">
   <div class="container">
     <h2 class="section-title">Schedule</h2>
-    <div class="row">
-      <div class="col-lg-7">
-        <div class="timeline">
-          <div class="timeline-item">
-            <p class="timeline-date mb-0">Thursday, 29 October 2026</p>
-            <h6 class="fw-bold mb-1">Welcome &amp; Evening Reception</h6>
-            <p class="text-muted" style="font-family:sans-serif; font-size:.9rem; margin:0;">
-              Arrival of participants, welcome reception in the evening.
-            </p>
-          </div>
-          <div class="timeline-item">
-            <p class="timeline-date mb-0">Thursday 29 &ndash; Saturday 31 October 2026</p>
-            <h6 class="fw-bold mb-1">Rock Climbing Hackathon</h6>
-            <p class="text-muted" style="font-family:sans-serif; font-size:.9rem; margin:0;">
-              Three days of intensive team work on perception, planning, and control challenges.
-              Live testing sessions on the climbing wall.
-            </p>
-          </div>
-          <div class="timeline-item">
-            <p class="timeline-date mb-0">Sunday, 1 November 2026</p>
-            <h6 class="fw-bold mb-1">Closing Day</h6>
-            <p class="text-muted" style="font-family:sans-serif; font-size:.9rem; margin:0;">
-              Morning debriefing, final demos, and <strong>Hackathon Trophies</strong> ceremony.
-              End of event.
-            </p>
-          </div>
+    <div class="row gy-4">
+      <div class="col-lg-8">
+        <div class="sched table-responsive">
+          <table class="table table-sm align-middle">
+              <tbody>
+                <tr class="day-row"><td colspan="2">Wednesday, 28 October 2026</td></tr>
+                <tr>
+                  <td class="time">10:00</td>
+                  <td><span class="ev-title">Visit of Pollen Robotics</span><img class="ev-logo" src="logos/pollen.svg" alt="Pollen Robotics" />
+                  <span class="ev-note">Guided visit of Pollen Robotics (a Hugging Face company), Bordeaux.</span></td>
+                </tr>
+                <tr>
+                  <td class="time">Afternoon</td>
+                  <td><span class="ev-title">Setting up</span>
+                  <span class="ev-note">Installation of the climbing wall and of the robotic platforms.</span></td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr class="day-row"><td colspan="2">Thursday, 29 October 2026</td></tr>
+                <tr>
+                  <td class="time">09:00</td>
+                  <td><span class="ev-title">Hackathon kick-off</span>
+                  <span class="ev-note">Opening of the hackathon and introduction to the platforms.</span></td>
+                </tr>
+                <tr>
+                  <td class="time">After kick-off</td>
+                  <td><span class="ev-title">Daily meeting / Tutorials</span>
+                  <span class="ev-note">Hands-on tutorials on the simulator and the robotic platforms.</span></td>
+                </tr>
+                <tr>
+                  <td class="time">12:00</td>
+                  <td><span class="ev-title">Standing buffet lunch</span>
+                  <span class="ev-note">Walking lunch (<em>cocktail d&eacute;jeunatoire</em>) offered by the organizers.</span></td>
+                </tr>
+                <tr class="hack">
+                  <td class="time">Afternoon</td>
+                  <td><span class="ev-title">Hackathon</span></td>
+                </tr>
+                <tr>
+                  <td class="time">Evening</td>
+                  <td><span class="ev-title">Welcome reception</span>
+                  <span class="ev-note">Arrival of the remaining participants, welcome reception.</span></td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr class="day-row"><td colspan="2">Friday, 30 October 2026</td></tr>
+                <tr>
+                  <td class="time">09:00 &ndash; 10:00</td>
+                  <td><span class="ev-title">Daily meeting / Tutorials</span>
+                  <span class="ev-note">Daily briefing of the teams, followed by a tutorial session.</span></td>
+                </tr>
+                <tr class="hack">
+                  <td class="time">From 10:00</td>
+                  <td><span class="ev-title">Hackathon</span>
+                  <span class="ev-note">Team work and live testing sessions on the climbing wall.</span></td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr class="day-row"><td colspan="2">Saturday, 31 October 2026</td></tr>
+                <tr>
+                  <td class="time">09:00 &ndash; 10:00</td>
+                  <td><span class="ev-title">Daily meeting / Tutorials</span>
+                  <span class="ev-note">Daily briefing of the teams, followed by a tutorial session.</span></td>
+                </tr>
+                <tr class="hack">
+                  <td class="time">From 10:00</td>
+                  <td><span class="ev-title">Hackathon</span></td>
+                </tr>
+                <tr>
+                  <td class="time">14:00</td>
+                  <td><span class="ev-title">Internship &amp; PhD opportunities</span>
+                  <span class="ev-note">Presentations by Bordeaux (France), Edinburgh (Scotland), Taipei (Taiwan) and Wolfenb&uuml;ttel (Germany).</span></td>
+                </tr>
+                <tr class="hack">
+                  <td class="time">Afternoon</td>
+                  <td><span class="ev-title">Hackathon continues</span></td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr class="day-row"><td colspan="2">Sunday, 1 November 2026</td></tr>
+                <tr class="hack">
+                  <td class="time">Morning</td>
+                  <td><span class="ev-title">Final hackathon sprint</span></td>
+                </tr>
+                <tr>
+                  <td class="time">11:00</td>
+                  <td><span class="ev-title">Closing day</span>
+                  <span class="ev-note">Debriefing, final demos and <strong>Hackathon Trophies</strong> ceremony.</span></td>
+                </tr>
+                <tr>
+                  <td class="time">Afternoon</td>
+                  <td><span class="ev-title">Dismantling the setup</span>
+                  <span class="ev-note">End of the event.</span></td>
+                </tr>
+              </tbody>
+          </table>
         </div>
+        <p class="text-muted mt-2 mb-0" style="font-family:sans-serif; font-size:.85rem;">
+          <i class="bi bi-info-circle me-1"></i>All the time not listed above, from 29 October to the
+          morning of 1 November, is dedicated to hackathon work.
+        </p>
       </div>
-      <div class="col-lg-5 d-flex align-items-center">
-        <div class="p-4 rounded" style="background:#e9f5ee; width:100%;">
+      <div class="col-lg-4">
+        <div class="p-4 rounded" style="background:#e9f5ee;">
           <h6 class="fw-bold" style="color:var(--accent); font-family:sans-serif;">At a Glance</h6>
           <table class="table table-borderless mb-0" style="font-family:sans-serif; font-size:.9rem;">
             <tbody>
               <tr><td><i class="bi bi-calendar-check me-1 text-success"></i><strong>Start</strong></td><td>29 Oct 2026</td></tr>
-              <tr><td><i class="bi bi-trophy me-1 text-warning"></i><strong>Hackathon</strong></td><td>29–31 Oct 2026</td></tr>
+              <tr><td><i class="bi bi-trophy me-1 text-warning"></i><strong>Hackathon</strong></td><td>29&ndash;31 Oct 2026</td></tr>
               <tr><td><i class="bi bi-flag me-1 text-danger"></i><strong>End</strong></td><td>1 Nov 2026</td></tr>
               <tr><td><i class="bi bi-geo me-1 text-primary"></i><strong>Location</strong></td><td>Bordeaux, France</td></tr>
             </tbody>
