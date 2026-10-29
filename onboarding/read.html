@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>…</title>
+    <link rel="icon" href="favicon.svg">
+    <link rel="stylesheet" href="vendor/fonts/fonts.css">
+    <link rel="stylesheet" href="vendor/highlight/github-dark.css">
+    <link rel="stylesheet" href="site.css">
+    <link rel="stylesheet" href="reader.css">
+    <link rel="stylesheet" href="toc.css">
+    <script src="deck.config.js"></script>
+    <script src="theme-toggle.js"></script>
+  </head>
+  <body class="reader">
+    <nav id="bar"></nav>
+    <main id="text"><p class="booting">…</p></main>
+    <script type="module">
+      import { read } from "./engine/reader.js";
+      read().catch((e) => {
+        console.error(e);
+        document.getElementById("text").textContent = String(e.message || e);
+      });
+    </script>
+  </body>
+</html>

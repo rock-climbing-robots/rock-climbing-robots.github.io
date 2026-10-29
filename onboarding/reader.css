@@ -1,0 +1,213 @@
+/* The text mode (read.html, engine/reader.js): a lecture as a page to read.
+   The prose is in Computer Modern like the slides, the headings in Lato, and
+   the ground is the stage's own, so a figure is a window on the slide. */
+
+:root {
+  --bg: #000000;
+  --ink: #e8e8ec;
+  --muted: #8b8b98;
+  --rule: #26262d;
+  --accent: #f0ac5f;
+  --chip: #16161c;
+}
+:root[data-theme="light"] {
+  --bg: #ffffff;
+  --ink: #1b1b21;
+  --muted: #6d6d78;
+  --rule: #dededa;
+  --accent: #9c6410;
+  --chip: #f6f6f3;
+}
+
+html, body.reader { height: auto; min-height: 100%; background: var(--bg); }
+
+/* Behind everything, fixed: the low-poly mesh of the slides (engine/reader.js).
+   Over it, a sheet of plain ground under the text column, opaque, its edges
+   marked by a shadow -- dark grey on the light theme, a pale glow on the dark
+   one: the text is read on a clean page, the mesh only shows in the margins. */
+#backdrop {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+body.reader::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  /* A narrow margin around the 46rem column (room for a tick box on the
+     left); the slides of a section (.tx-go) sit OUTSIDE it, on the right. */
+  left: calc(50% - 26rem);
+  width: 52rem;
+  z-index: 1;
+  pointer-events: none;
+  background: var(--bg);
+  box-shadow: 0 0 28px 2px rgba(255, 255, 255, 0.16);
+}
+:root[data-theme="light"] body.reader::before {
+  box-shadow: 0 0 28px 2px rgba(40, 40, 46, 0.30);
+}
+#bar, #text { position: relative; z-index: 2; }
+/* No room for margins: the ground is plain everywhere. */
+@media (max-width: 56rem) {
+  body.reader::before { left: 0; width: 100%; box-shadow: none; }
+}
+body.reader {
+  color: var(--ink);
+  font-family: "CMU Serif", Georgia, serif;
+  font-weight: 500;
+  font-size: 21px;
+  line-height: 1.55;
+}
+
+/* The top bar: back to the course, where one is, and the slides. The theme
+   and language buttons of theme-toggle.js sit in its right end. */
+#bar {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  height: 3.2rem;
+  padding: 0 7.2rem 0 1.2rem;
+  background: var(--bg);
+  border-bottom: 1px solid var(--rule);
+  font: 400 15px Lato, sans-serif;
+}
+#bar a { color: var(--muted); text-decoration: none; }
+#bar a:hover { color: var(--accent); }
+#bar .where { flex: 1; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#bar .slides {
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  border-radius: 1rem;
+  padding: .25rem .8rem;
+}
+
+.theme-toggle {
+  position: fixed;
+  top: .55rem;
+  right: 1rem;
+  z-index: 5;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 50%;
+  border: 1px solid var(--rule);
+  background: var(--chip);
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
+.lang-toggle { right: 3.6rem; font: 600 .72rem Lato, sans-serif; letter-spacing: .03em; }
+
+#text {
+  width: min(46rem, calc(100vw - 2.4rem));
+  margin: 0 auto;
+  padding: 2.5rem 0 5rem;
+}
+.booting { color: var(--muted); text-align: center; }
+
+.tx-head { margin-bottom: 2.5rem; }
+/* The text is generated from the slides: said once, at the top, discreetly. */
+.tx-warning {
+  margin: 1.2rem 0 0;
+  padding: .6rem .9rem;
+  border-left: 3px solid var(--accent);
+  background: var(--chip);
+  color: var(--muted);
+  font: 400 14px/1.5 Lato, sans-serif;
+}
+.overline {
+  color: var(--accent);
+  font: 400 .8rem Lato, sans-serif;
+  letter-spacing: .35em;
+  text-transform: uppercase;
+  margin: 0 0 .6rem;
+}
+h1, h2, h3 { font-family: Lato, sans-serif; font-weight: 400; line-height: 1.25; }
+h1 { font-size: 2.1rem; margin: 0; }
+h2 { font-size: 1.6em; margin: 2.6em 0 .6em; }
+h3 { font-size: 1.25em; margin: 1.8em 0 .5em; }
+
+/* A title's permalink: a "#" after it, seen when the title is hovered. */
+h2, h3 { scroll-margin-top: 4.5rem; }
+.permalink {
+  margin-left: .45em;
+  color: var(--muted);
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity .15s ease, color .15s ease;
+}
+h2:hover .permalink, h3:hover .permalink, .permalink:focus { opacity: 1; }
+.permalink:hover { color: var(--accent); }
+.permalink.copied { opacity: 1; color: var(--accent); }
+.permalink.copied::after {
+  content: " " attr(data-copied);
+  font: 400 13px Lato, sans-serif;
+}
+
+/* A section, and in its right margin the slides it covers. */
+.tx { position: relative; scroll-margin-top: 4.5rem; }
+.tx > p { margin: 0 0 1rem; }
+.tx-go {
+  position: absolute;
+  top: .35rem;
+  left: calc(100% + 4rem);    /* past the edge of the sheet, on the mesh */
+  white-space: nowrap;
+  font: 400 13px Lato, sans-serif;
+  color: var(--muted);
+  text-decoration: none;
+  border: 1px solid var(--rule);
+  border-radius: 1rem;
+  padding: .15rem .65rem;
+  background: var(--chip);
+}
+.tx-go:hover { color: var(--accent); border-color: var(--accent); }
+/* One mark only: the section being read has its slides in the accent. */
+.tx.reading > .tx-go { color: var(--accent); border-color: var(--accent); }
+/* No margin to speak of: the link goes above the section, on the right. */
+@media (max-width: 72rem) {
+  .tx-go, .tx-go:has(+ h2) { position: static; float: right; margin: .9rem 0 .4rem 1rem; }
+}
+
+/* A figure: an illustration of the lecture, drawn live on its own canvas
+   on the page's own ground (no frame: it is part of the page, not a slide),
+   with its HTML layer on top and a small button that plays it. */
+.tx-fig { margin: 1.8rem 0 2rem; }
+.tx-fig .stage { position: relative; width: var(--fig-width, 100%); margin: 0 auto; }
+.tx-fig canvas { display: block; width: 100%; height: 100%; cursor: pointer; }
+.fig-layer { position: absolute; inset: 0; pointer-events: none; }
+.tx-fig .play {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 50%;
+  border: 1px solid var(--rule);
+  background: var(--chip);
+  color: var(--muted);
+  font-size: .8rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.tx-fig .play:hover, .tx-fig.live .play { color: var(--accent); border-color: var(--accent); }
+.tx-fig figcaption {
+  margin: .7rem auto 0;
+  max-width: 36rem;
+  text-align: center;
+  color: var(--muted);
+  font-size: .8em;
+  line-height: 1.45;
+}
+.tx-fig figcaption b { color: var(--ink); font-weight: 700; }
+/* A photograph or a video: the course's own media, at the column's width. */
+.tx-media img, .tx-media video { display: block; max-width: 100%; max-height: 70vh; margin: 0 auto; border-radius: 6px; }
+
+.tx-math.display { display: block; text-align: center; margin: .6rem 0; }

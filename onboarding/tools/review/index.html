@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Slides review</title>
+    <script>
+      // The theme is set before the first paint, or a light page flashes dark.
+      try {
+        if (localStorage.getItem("review-theme") === "light") {
+          document.documentElement.dataset.theme = "light";
+        }
+      } catch (e) { /* storage blocked: dark */ }
+    </script>
+    <link rel="stylesheet" href="/app.css">
+    <script>
+      // Titles and explanations are written with $...$ islands, like the slides.
+      window.MathJax = {
+        tex: { inlineMath: [["$", "$"], ["\\(", "\\)"]] },
+        svg: { fontCache: "local" },
+        options: { skipHtmlTags: ["script", "noscript", "style", "textarea"] },
+        startup: { typeset: false },
+      };
+    </script>
+    <script src="/vendor/tex-svg-full.js" async></script>
+  </head>
+  <body>
+    <header>
+      <div class="bar">
+        <h1><a href="/" id="home">Slides review</a></h1>
+        <button id="newreq" class="primary" title="Ask for a change, on no slide in particular">+ New request</button>
+        <button id="theme" class="ghost" title="Light or dark (or press t three times)"></button>
+        <button id="again" class="ghost" title="Fetch the board again">&#8635; Refresh</button>
+      </div>
+      <nav id="tabs"></nav>
+    </header>
+    <p id="toast" hidden></p>
+    <p id="notice" hidden></p>
+    <main id="board"></main>
+    <p id="empty" hidden></p>
+    <script src="/app.js"></script>
+  </body>
+</html>

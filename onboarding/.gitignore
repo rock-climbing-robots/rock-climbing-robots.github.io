@@ -1,0 +1,12 @@
+node_modules/
+package-lock.json
+package.json
+# The review board: screenshots, comments, work in progress. Never published.
+.review/
+# The class list of the student roulette: names, and personal data. NEVER
+# versioned, never published (the publish targets exclude it too).
+etudiants.csv
+*etudiants*
+*.swp
+# Managed files replaced by a forced update (install.mjs update --force).
+.anim-slides.backup/

@@ -1,0 +1,6 @@
+# The course's own settings, included by the Makefile (which the skill owns
+# and overwrites on update). This file is yours.
+
+# Where `make publish` sends the site (rsync destination), e.g.:
+# PUBLISH := myhost:www/my-course/
+PUBLISH :=

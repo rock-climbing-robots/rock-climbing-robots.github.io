@@ -1,0 +1,283 @@
+/* The practical subjects: prose pages, in the same clothes as the text mode
+   (reader.css). The deck is a canvas; these are ordinary documents, plain
+   HTML: the prose in Computer Modern, the titles in Lato, on a sheet of
+   plain ground with a shadowed edge over the animated sketch; a tick box
+   and a number beside every step; listings dark in both themes, as in an
+   editor; the outline of the page on the left (toc.css). */
+
+:root {
+  --bg: #0a0a0c;
+  --fg: #e8e8ea;
+  --muted: #9a9aa4;
+  --gold: #f0ac5f;
+  --blue: #58c4dd;
+  --green: #83c167;
+  --red: #fc6255;
+  --panel: #131317;
+  --line: #2a2a31;
+  --inline: #1b1b21;
+  /* The listing, and the syntax palette that goes with it (github-dark,
+     the one the slides use for their code). */
+  --code-bg: #0d1117;
+  --code-line: #26262e;
+  --code-fg: #c9d1d9;
+  --c-kw: #ff7b72;
+  --c-name: #ffa657;
+  --c-num: #79c0ff;
+  --c-str: #a5d6ff;
+  --c-fun: #d2a8ff;
+  --c-com: #8b949e;
+  --c-op: #c9d1d9;
+}
+
+/* The light side of the same page (theme-toggle.js): a white sheet. The
+   listings do NOT turn over: they stay dark (github-dark), like the
+   terminal or the editor the code goes into. */
+:root[data-theme="light"] {
+  --bg: #ffffff;
+  --fg: #1b1b21;
+  --muted: #63636e;
+  --gold: #9c6410;
+  --blue: #17708f;
+  --green: #3d7a2a;
+  --red: #b93b2e;
+  --panel: #f6f6f3;
+  --line: #e2e2dd;
+  --inline: #efefeb;
+  --code-line: #0d1117;
+}
+
+html, body { margin: 0; background: var(--bg); }
+
+body {
+  color: var(--fg);
+  font: 500 21px/1.55 "CMU Serif", Georgia, serif;
+  padding: 0 1.2rem 5rem;
+}
+
+main { position: relative; z-index: 2; max-width: 46rem; margin: 0 auto; }
+
+/* The animated sketch of the landing page, fixed behind everything. Over
+   it, a sheet of plain ground under the text column, opaque, its edges
+   marked by a shadow -- dark grey on the light theme, a pale glow on the
+   dark one (the same sheet as the text mode's, reader.css). */
+#sketch {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: calc(50% - 26rem);        /* a narrow margin around the 46rem column */
+  width: 52rem;
+  z-index: 1;
+  pointer-events: none;
+  background: var(--bg);
+  box-shadow: 0 0 28px 2px rgba(255, 255, 255, 0.16);
+}
+:root[data-theme="light"] body::before { box-shadow: 0 0 28px 2px rgba(40, 40, 46, 0.30); }
+@media (max-width: 56rem) {
+  body::before { left: 0; width: 100%; box-shadow: none; }
+}
+
+/* Titles in Lato, like the slides' titles. A section opens on a thin rule
+   rather than on blank space. */
+h1, h2, h3 { font-family: Lato, sans-serif; font-weight: 400; line-height: 1.25; }
+h1 { font-size: 2.1rem; margin: 2.4rem 0 0.4rem; }
+/* The subjects use a bare # for their second half: it is a section, not a
+   second page title. */
+main h1:not(.page-title), h2 {
+  font-size: 1.6rem;
+  margin: 2rem 0 0.7rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--line);
+}
+h3 { font-size: 1.25rem; margin: 1.2rem 0 0.5rem; }
+h2 + h3 { margin-top: 0.4rem; }
+h1, h2, h3 { scroll-margin-top: 1rem; }
+
+a { color: var(--gold); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+a:hover { color: var(--fg); }
+
+code {
+  font-family: "DejaVu Sans Mono", Menlo, Consolas, monospace;
+  font-size: 0.88em;
+  background: var(--inline);
+  border-radius: 3px;
+  padding: 0.1em 0.3em;
+}
+pre {
+  color: var(--code-fg);
+  background: var(--code-bg);
+  border: 1px solid var(--code-line);
+  border-radius: 0.5rem;
+  padding: 0.9rem 1.1rem;
+  overflow-x: auto;
+}
+pre code { background: none; padding: 0; font-size: 0.82rem; }
+/* Pandoc numbers the lines with empty anchors: they must stay invisible. */
+pre a { color: inherit; text-decoration: none; }
+
+/* Syntax colouring. Pandoc marks up the tokens itself (skylighting classes)
+   while the pages are built, so there is nothing to run in the browser:
+   only the palette is missing. It is the one of the code shown in the
+   slides (github-dark). */
+.sourceCode .kw, .sourceCode .cf, .sourceCode .im,
+.sourceCode .kc, .sourceCode .bu { color: var(--c-kw); }       /* keywords */
+.sourceCode .dt, .sourceCode .va, .sourceCode .pp,
+.sourceCode .at { color: var(--c-name); }                      /* types, names */
+.sourceCode .dv, .sourceCode .bn, .sourceCode .fl,
+.sourceCode .ch, .sourceCode .cn { color: var(--c-num); }      /* literals */
+.sourceCode .st, .sourceCode .vs, .sourceCode .ss,
+.sourceCode .sc { color: var(--c-str); }                       /* strings */
+.sourceCode .fu, .sourceCode .ex { color: var(--c-fun); }      /* calls */
+.sourceCode .co, .sourceCode .do { color: var(--c-com); font-style: italic; }
+.sourceCode .op, .sourceCode .sy { color: var(--c-op); }
+.sourceCode .al, .sourceCode .er, .sourceCode .wa { color: var(--c-kw); }
+
+img { max-width: 100%; height: auto; }
+/* The figures drawn live (figures.js): they carry their own proportions. */
+canvas[data-figure] {
+  display: block;
+  width: 100%;
+  max-width: 25rem;
+  aspect-ratio: 6.6 / 5.2;
+  margin: 1.4rem auto;
+}
+video { max-width: 100%; height: auto; border-radius: 0.5rem; }
+/* A figure meant for paper (black labels on nothing: most SVG exports, or
+   any image given class="plate") gets its own light plate rather than a
+   redraw. */
+img[src$=".svg"], img.plate {
+  background: #f2f2f4;
+  border-radius: 0.4rem;
+  padding: 0.7rem;
+}
+/* On a light page the plate no longer stands out on its own. */
+:root[data-theme="light"] img[src$=".svg"],
+:root[data-theme="light"] img.plate { border: 1px solid var(--line); }
+.text-center { text-align: center; }
+.img-fluid { max-width: 100%; height: auto; }
+.d-flex { display: flex; gap: 1rem; }
+.align-items-center { align-items: center; }
+.justify-content-center { justify-content: center; }
+big { font-size: 1.15em; }
+
+/* The coloured call-outs of the original subjects. */
+.alert {
+  border: 1px solid var(--line);
+  border-left-width: 4px;
+  border-radius: 0.4rem;
+  background: var(--panel);
+  padding: 0.9rem 1.2rem;
+  margin: 1.4rem 0;
+}
+.alert-info { border-left-color: var(--blue); }
+.alert-primary { border-left-color: var(--gold); }
+.alert-warning { border-left-color: var(--red); }
+.alert p:first-child { margin-top: 0; }
+.alert p:last-child { margin-bottom: 0; }
+.alert img { width: 3rem; }
+
+/* A step of the subject: plain prose, no box; in the left margin, a box to
+   tick once it is done and the step's number under it ("7/15"). A step
+   done fades, and stays faded; ticking it throws a few green sparks (tp.js). */
+.step { position: relative; transition: opacity 0.2s; }
+.step.done { opacity: 0.55; }
+.step-checkbox {
+  position: absolute;
+  left: -2.1rem;
+  top: 0.3rem;
+  width: 1.15rem;
+  height: 1.15rem;
+  margin: 0;
+  accent-color: var(--green);
+  cursor: pointer;
+}
+.step-num {
+  position: absolute;
+  left: -2.9rem;
+  width: 2.75rem;
+  top: 1.55rem;
+  text-align: center;
+  color: var(--muted);
+  font: 400 11px/1 Lato, sans-serif;
+  letter-spacing: .02em;
+  user-select: none;
+}
+.spark {
+  position: fixed;
+  z-index: 10;
+  width: 9px;
+  height: 2.5px;
+  margin: -1.25px 0 0 0;
+  border-radius: 1.25px;
+  background: var(--green);
+  transform-origin: 0 50%;
+  pointer-events: none;
+}
+
+/* The top bar, as in the text mode (reader.css): back to the course, and
+   the title of the practical. It spans the window, over the body's gutter. */
+#bar {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  height: 3.2rem;
+  margin: 0 -1.2rem;
+  padding: 0 7.2rem 0 1.2rem;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  font: 400 15px Lato, sans-serif;
+}
+#bar a { color: var(--muted); text-decoration: none; }
+#bar a:hover { color: var(--gold); }
+#bar .where { flex: 1; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* Light or dark, in the right end of the bar. */
+.theme-toggle {
+  position: fixed;
+  top: .55rem;
+  right: 1rem;
+  z-index: 5;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+.theme-toggle:hover { color: var(--gold); border-color: var(--gold); }
+/* The language, beside it: named after the one it switches to. */
+.lang-toggle { right: 3.6rem; font-size: .72rem; font-weight: 700; letter-spacing: .04em; }
+
+/* Back to the course, at the end of the page. */
+.back {
+  display: inline-block;
+  margin: 1.6rem 0 0;
+  color: var(--muted);
+  font: 400 0.9rem Lato, sans-serif;
+  text-decoration: none;
+}
+.back:hover { color: var(--fg); }
+
+/* No margin left for the tick boxes: the steps make room for them. */
+@media (max-width: 56rem) {
+  body { font-size: 18px; }
+  .step { padding-left: 2.2rem; }
+  .step-checkbox { left: .3rem; }
+  .step-num { left: 0; width: 1.75rem; }
+}

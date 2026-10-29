@@ -1,0 +1,344 @@
+/* Lecture pages: the canvas is the slide, reveal.js only navigates. */
+html, body { height: 100%; margin: 0; background: #000; }
+
+/* The light theme of the site reaches the slides too (theme-toggle.js sets
+   data-theme, engine/palette.js gives the canvas the matching ink). What
+   follows is the furniture around the canvas: the ground, reveal's chrome
+   and the code listing. */
+html[data-theme="light"], html[data-theme="light"] body { background: #f4f4f1; }
+
+#scene {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* reveal's sections are empty (the drawing is on the canvas), but its
+   controls, progress bar and slide number must stay on top. */
+.reveal { position: fixed; inset: 0; z-index: 1; }
+.reveal .slides { pointer-events: none; }
+.reveal .slides section { width: 100%; height: 100%; }
+.reveal .controls, .reveal .progress, .reveal .slide-number { pointer-events: auto; }
+
+.reveal { font-family: Lato, sans-serif; color: #fff; }
+.reveal .progress { color: #f0ac5f; height: 3px; }
+.reveal .controls { color: #8b8b98; }
+html[data-theme="light"] .reveal { color: #1b1b21; }
+html[data-theme="light"] .reveal .progress { color: #9c6410; }
+html[data-theme="light"] .reveal .controls { color: #8a8a95; }
+/* Bottom LEFT: bottom right is where reveal puts its arrows. */
+.reveal .slide-number {
+  background: none;
+  color: #55555f;
+  font-size: 14px;
+  right: auto;
+  left: 12px;
+  bottom: 8px;
+}
+html[data-theme="light"] .reveal .slide-number { color: #a5a5ae; }
+html[data-theme="light"] #booting { color: #a5a5ae; }
+
+/* Shown while MathJax and the fonts load. */
+#booting {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #55555f;
+  font: 300 18px Lato, sans-serif;
+  z-index: 2;
+}
+
+/* Code listings are HTML, laid over the canvas: real text, coloured by
+   highlight.js. Everything is sized in em so one font-size scales the
+   window with the slide. */
+/* Above reveal's own layer, so a listing can be selected with the mouse:
+   reveal covers the whole viewport and would otherwise swallow the clicks.
+   The layer itself is transparent to the pointer, so swiping and clicking
+   still navigate everywhere else. */
+#html-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.code-window {
+  position: absolute;
+  display: none;
+  box-sizing: border-box;
+  background: #0d1117;   /* black, in BOTH themes: never a light window */
+  border: 1px solid #30363d;
+  border-radius: 0.5em;
+  padding: 0.35em 0.9em 0.7em;
+  pointer-events: auto;
+  cursor: text;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+/* Without its title bar (code(src, { bar: false })): as much room above
+   the text as below it. */
+.code-window.code-plain { padding-top: 0.7em; }
+
+.code-bar {
+  display: flex;
+  gap: 0.45em;
+  padding: 0.2em 0 0.5em;
+}
+.code-bar i { width: 0.62em; height: 0.62em; border-radius: 50%; }
+.code-bar i:nth-child(1) { background: #ff5f57; }
+.code-bar i:nth-child(2) { background: #febc2e; }
+.code-bar i:nth-child(3) { background: #28c840; }
+
+.code-window pre { margin: 0; }
+.code-window code.hljs {
+  display: block;
+  padding: 0;
+  background: none;
+  font-family: "DejaVu Sans Mono", Menlo, Consolas, monospace;
+  font-size: 1em;
+  line-height: inherit;
+  white-space: pre;
+}
+
+/* No light half: a listing is github-dark on black in both themes (the
+   vendored github-dark stylesheet), a light slide included. */
+.code-window .hljs { background: none; }
+
+/* The student roulette: "rrr" / "iii" (engine/roulette.js). Not a slide but
+   a classroom tool laid on top -- hence real HTML, above reveal, and a veil
+   that takes the colour of the page. */
+.roulette {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.72);
+  font-family: Lato, sans-serif;
+  cursor: pointer;
+}
+html[data-theme="light"] .roulette { background: rgba(244, 244, 241, 0.86); }
+
+.roulette-box {
+  padding: 1.6rem 2.5rem 1.2rem;
+  /* The window sets its own width (the slots are absolutely positioned and
+     no longer carry it); the box follows. */
+  display: inline-block;
+  border: 2px solid #f0ac5f;
+  border-radius: 0.8rem;
+  background: #000;
+  text-align: center;
+}
+html[data-theme="light"] .roulette-box { background: #f4f4f1; border-color: #9c6410; }
+
+.roulette-title {
+  color: #f0ac5f;
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  margin-bottom: 1rem;
+}
+html[data-theme="light"] .roulette-title { color: #9c6410; }
+
+/* A real wheel: the names sit on a cylinder, each in its slot, and the
+   cylinder turns. The height of the window, the perspective and the radius
+   are computed in JS from the measured height of a slot -- that is what makes
+   the names touch on the wheel without overlapping. */
+/* No `overflow: hidden` here, on purpose: Chrome would then clip the slots to
+   the window SHRUNK by the perspective -- a long name loses its last letters
+   with nothing in the geometry to show it. The opacities, computed at every
+   frame, hide the slots outside the band, and they fall exactly to zero at
+   the edge. */
+.roulette-window {
+  position: relative;
+}
+
+.roulette-drum {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+.roulette-row {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 3.1rem;
+  margin-top: -1.55rem;
+  line-height: 3.1rem;
+  font-size: 2.1rem;
+  color: #fff;
+  white-space: nowrap;
+}
+html[data-theme="light"] .roulette-row { color: #1b1b21; }
+
+/* The winning row, once the drum has stopped. Its transform carries its
+   place on the wheel, so only the colour and the weight change. */
+.roulette-row.won {
+  color: #f0ac5f;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+html[data-theme="light"] .roulette-row.won { color: #9c6410; }
+
+/* The sights: two lines and an arrow, there from the start -- one knows
+   where to look while it spins. */
+.roulette-window::before,
+.roulette-window::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #f0ac5f;
+  opacity: 0.5;
+  z-index: 1;
+}
+.roulette-window::before { top: 40%; }
+.roulette-window::after { bottom: 40%; }
+html[data-theme="light"] .roulette-window::before,
+html[data-theme="light"] .roulette-window::after { background: #9c6410; }
+
+/* A solid triangle, on the left, pointing at the middle row. */
+.roulette-marker {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border: 0.5rem solid transparent;
+  border-left-width: 0.75rem;
+  border-right-width: 0;
+  border-left-color: #f0ac5f;
+  z-index: 1;
+}
+html[data-theme="light"] .roulette-marker { border-left-color: #9c6410; }
+
+.roulette-left {
+  margin-top: 1rem;
+  min-height: 1.2em;
+  font-size: 0.95rem;
+  color: #8b8b98;
+}
+
+/* The slider of the interactive slides (engine/slider.js). Violet, the
+   colour a lecture gives the quantity it controls: the control and the
+   quantity wear the same colour, on the figure as in the formulas. */
+.deck-slider {
+  position: absolute;
+  display: none;
+  margin: 0;
+  padding: 0;
+  pointer-events: auto;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+.deck-slider:focus { outline: none; }
+
+.deck-slider::-webkit-slider-runnable-track {
+  height: 0.28em;
+  border-radius: 0.14em;
+  background: #55555f;
+}
+.deck-slider::-moz-range-track {
+  height: 0.28em;
+  border-radius: 0.14em;
+  background: #55555f;
+}
+html[data-theme="light"] .deck-slider::-webkit-slider-runnable-track { background: #c9c9d2; }
+html[data-theme="light"] .deck-slider::-moz-range-track { background: #c9c9d2; }
+
+.deck-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 1.1em;
+  height: 1.1em;
+  margin-top: -0.41em;
+  border: none;
+  border-radius: 50%;
+  background: #a98be8;
+}
+.deck-slider::-moz-range-thumb {
+  width: 1.1em;
+  height: 1.1em;
+  border: none;
+  border-radius: 50%;
+  background: #a98be8;
+}
+html[data-theme="light"] .deck-slider::-webkit-slider-thumb { background: #6b46c1; }
+html[data-theme="light"] .deck-slider::-moz-range-thumb { background: #6b46c1; }
+
+.deck-slider:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 0.22em rgba(169, 139, 232, 0.4); }
+.deck-slider:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 0.22em rgba(169, 139, 232, 0.4); }
+
+/* A handle: a point of a figure one MOVES with the mouse, the finger or the
+   arrow keys (engine/handle.js). Like the slider, real HTML in the layer --
+   a ring around what the lecture draws there, dashed, so that it reads as
+   something to grab and not as one more circle of the figure. It wears the
+   colour of what it moves (`color`), so `currentColor` is all this needs. */
+.deck-handle {
+  position: absolute;
+  display: none;
+  box-sizing: border-box;
+  border-radius: 50%;
+  border: 2px dashed currentColor;
+  background: transparent;
+  opacity: 0.7;
+  pointer-events: auto;
+  cursor: grab;
+  touch-action: none;           /* or the drag scrolls the page on a tablet */
+}
+.deck-handle:hover, .deck-handle.held {
+  opacity: 1;
+  background: color-mix(in srgb, currentColor 16%, transparent);
+}
+.deck-handle.held { cursor: grabbing; border-style: solid; }
+.deck-handle:focus { outline: none; }
+.deck-handle:focus-visible {
+  opacity: 1;
+  box-shadow: 0 0 0 0.2em color-mix(in srgb, currentColor 35%, transparent);
+}
+
+/* A link on a slide (engine/link.js): a real <a> in #html-layer, placed at
+   every frame from its mobject like a slider. Without `position: absolute`
+   its left/top are ignored and it lands in the top-left corner. */
+.slide-link {
+  position: absolute;
+  display: none;
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+  white-space: nowrap;
+  font-family: "CMU Serif", serif;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  pointer-events: auto;
+}
+.slide-link:hover { text-decoration-thickness: 0.08em; }
+.slide-link-box { text-decoration: none; }
+
+/* The way to the text, on the slides: a word INSIDE reveal's slide number
+   (engine/deck.js), so it sits on the number's own line and in its type. */
+.reveal .slide-number .to-text {
+  margin-left: .9em;
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+  vertical-align: baseline;
+  cursor: pointer;
+}
+.reveal .slide-number .to-text:hover { color: #f0ac5f; }
+html[data-theme="light"] .reveal .slide-number .to-text:hover { color: #9c6410; }

@@ -1,0 +1,54 @@
+/* The outline of a page (engine/toc.js), fixed left of its text: the text
+   mode (read.html) and the practicals (tp_*.html) both load it. Every title,
+   indented by level; the ones scrolled past struck through and faded.
+
+   It is anchored to the SHEET the text sits on (46rem of text, 52rem of
+   sheet, centred: its left edge at 50% - 26rem), not to the window: its
+   right edge stays 2rem before the sheet, clear of its shadow, and it only
+   narrows when the window leaves less room -- then hides. */
+
+#toc {
+  --toc-bg: #16161c;
+  --toc-line: #2a2a31;
+  --toc-ink: #e8e8ec;
+  --toc-muted: #8b8b98;
+  --toc-accent: #f0ac5f;
+  position: fixed;
+  top: var(--toc-top, 4.2rem);      /* under the bar of read.html */
+  right: calc(50% + 28rem);
+  z-index: 2;
+  box-sizing: border-box;
+  width: min(18rem, calc(50% - 29rem));
+  max-height: calc(100vh - var(--toc-top, 4.2rem) - 1.2rem);
+  overflow-y: auto;
+  padding: .8rem .9rem;
+  background: var(--toc-bg);
+  border: 1px solid var(--toc-line);
+  border-radius: 8px;
+  box-shadow: 0 2px 14px rgba(255, 255, 255, 0.08);
+  font: 400 14px/1.35 Lato, sans-serif;
+}
+:root[data-theme="light"] #toc {
+  --toc-bg: #ffffff;
+  --toc-line: #dededa;
+  --toc-ink: #1b1b21;
+  --toc-muted: #6d6d78;
+  --toc-accent: #9c6410;
+  box-shadow: 0 2px 14px rgba(40, 40, 46, 0.18);
+}
+#toc a {
+  display: block;
+  padding: .18rem 0;
+  color: var(--toc-ink);
+  text-decoration: none;
+  transition: opacity .15s ease;
+}
+#toc a:hover { color: var(--toc-accent); }
+#toc .toc-h1 { font-size: 16px; margin-bottom: .2rem; }
+#toc .toc-h2 { padding-left: .8rem; }
+#toc .toc-h3 { padding-left: 1.9rem; color: var(--toc-muted); font-size: 13px; }
+#toc a.passed { text-decoration: line-through; opacity: .45; }
+#toc svg { vertical-align: middle; }
+@media (max-width: 80rem) {
+  #toc { display: none; }
+}

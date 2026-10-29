@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Course</title>
+    <link rel="icon" href="favicon.svg">
+    <link rel="stylesheet" href="vendor/fonts/fonts.css">
+    <script src="deck.config.js"></script>
+    <script src="theme-toggle.js"></script>
+    <style>
+      :root {
+        --bg: #0b0b0e;
+        --card: #16161c;
+        --card-hover: #1d1d25;
+        --border: #2a2a33;
+        --text: #ececf1;
+        --muted: #8b8b98;
+        --accent: #f0ac5f;
+        --grid: rgba(255, 255, 255, 0.045);
+        --band: 0, 0, 0;
+      }
+      :root[data-theme="light"] {
+        --bg: #f4f4f1;
+        --card: #ffffff;
+        --card-hover: #f7f2ea;
+        --border: #dededa;
+        --text: #1b1b21;
+        --muted: #6d6d78;
+        --accent: #b8760f;
+        --grid: rgba(0, 0, 0, 0.05);
+        --band: 255, 255, 255;
+      }
+      * { box-sizing: border-box; }
+      html { height: 100%; }
+      /* min-height, not height: a fixed-height flex body swallows the bottom
+         padding of its overflowing child. */
+      body {
+        margin: 0;
+        min-height: 100%;
+        background:
+          repeating-linear-gradient(to right, var(--grid) 0 1px, transparent 1px 64px),
+          repeating-linear-gradient(to bottom, var(--grid) 0 1px, transparent 1px 64px),
+          var(--bg);
+        color: var(--text);
+        font-family: "Lato", "Segoe UI", system-ui, -apple-system, sans-serif;
+        display: flex;
+        justify-content: center;
+      }
+      #sketch { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+      main { position: relative; z-index: 2; width: min(40rem, 92vw); padding: 2.4rem 0 5rem; }
+      /* A band behind the text column, fading out to both sides: the sketch
+         stays fully visible outside it and is damped behind the words. */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        background: linear-gradient(to right,
+          rgba(var(--band), 0) 0%,
+          rgba(var(--band), 0) calc(50% - 32rem),
+          rgba(var(--band), .75) calc(50% - 20rem),
+          rgba(var(--band), .75) calc(50% + 20rem),
+          rgba(var(--band), 0) calc(50% + 32rem),
+          rgba(var(--band), 0) 100%);
+      }
+      .overline { color: var(--accent); font-size: .8rem; letter-spacing: .35em; text-transform: uppercase; margin: 0 0 .6rem; }
+      h1 { font-size: 2rem; font-weight: 600; margin: 0 0 .5rem; }
+      .subtitle { color: var(--muted); margin: 0 0 2.5rem; font-weight: 300; }
+      .subtitle a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--border); }
+      .subtitle a:hover { color: var(--accent); border-color: var(--accent); }
+      /* The table of contents is one block: the entries share their borders. */
+      .toc { background: var(--card); border: 1px solid var(--border); border-radius: .75rem; overflow: hidden; }
+      .card {
+        position: relative; display: flex; align-items: center; gap: 1.1rem;
+        padding: 1.05rem 1.3rem; border-top: 1px solid var(--border);
+        text-decoration: none; color: var(--text);
+        transition: background .15s ease, padding-left .15s ease;
+      }
+      .toc > :first-child { border-top: none; }
+      /* Nothing moves sideways, or the block would come apart: the hovered
+         row lights up and grows an accent edge instead. */
+      .card::before {
+        content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+        background: var(--accent); opacity: 0; transition: opacity .15s ease;
+      }
+      .card:hover { background: var(--card-hover); padding-left: 1.6rem; }
+      .card:hover::before { opacity: 1; }
+      .num { font-family: "SF Mono", "Cascadia Mono", Consolas, monospace; color: var(--accent); font-size: .95rem; }
+      .name { flex: 1; font-size: 1.05rem; }
+      .go { color: var(--muted); transition: color .15s ease, transform .15s ease; }
+      .card:hover .go { color: var(--accent); transform: translateX(2px); }
+      .sep {
+        margin: 0; border-top: 1px solid var(--border); background: rgba(127, 127, 127, .06);
+        color: var(--muted); font-size: .72rem; letter-spacing: .3em; text-transform: uppercase;
+        padding: .6rem 1.3rem;
+      }
+      .zip { font-size: .78rem; color: var(--muted); border: 1px solid var(--border); border-radius: .4rem; padding: .18rem .55rem; cursor: pointer; }
+      .zip:hover { color: var(--accent); border-color: var(--accent); }
+      .empty { padding: 1.2rem 1.3rem; color: var(--muted); margin: 0; }
+      .theme-toggle {
+        position: fixed; top: 1rem; right: 1rem; z-index: 5;
+        width: 2.1rem; height: 2.1rem; border-radius: 50%;
+        border: 1px solid var(--border); background: var(--card); color: var(--muted);
+        font-size: 1rem; line-height: 1; cursor: pointer;
+        transition: color .15s ease, border-color .15s ease;
+      }
+      .theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
+      .lang-toggle { right: 3.6rem; font-size: .72rem; font-weight: 700; letter-spacing: .04em; }
+      @media (max-width: 60rem) {
+        body::before { background: linear-gradient(to bottom, rgba(var(--band), .62) 0%, rgba(var(--band), .62) 100%); }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="sketch"></canvas>
+    <main>
+      <p class="overline" id="author"></p>
+      <h1 id="title"></h1>
+      <p class="subtitle" id="subtitle"></p>
+      <div class="toc" id="toc"></div>
+    </main>
+    <script type="module">
+      import { lectures, practicals } from "./lectures/manifest.js";
+      import { backgroundSketch } from "./sketch.js";
+
+      const cfg = window.DECK_CONFIG || {};
+      // A title may be one string, or one per language: { en: "...", fr: "..." }.
+      const say = (x) => (typeof x === "string" || !x ? x || ""
+        : x[document.documentElement.lang] || x[cfg.lang] || Object.values(x)[0]);
+      const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;");
+
+      function render() {
+        document.title = say(cfg.title) || "Course";
+        document.getElementById("title").textContent = say(cfg.title);
+        document.getElementById("author").textContent = say(cfg.author);
+        // The subtitle may carry a link (an e-mail address): it is the course's own text.
+        document.getElementById("subtitle").innerHTML = say(cfg.subtitle);
+
+        // THE way the landing page offers a second way in (keep it so): a
+        // small chip INSIDE the card, just before its arrow -- "Text" on a
+        // lecture that has one (`text: true`: read.html), "archive" on a
+        // practical that hands one out (`zip`). Never a column beside the
+        // card. The practicals follow the lectures IN THE SAME BLOCK, under a
+        // separator row, numbered when the manifest gives them a `number`.
+        const words = cfg.words || {};
+        let rows = lectures.map((l) => '<a class="card" href="' + l.page + '">'
+          + '<span class="num">' + esc(l.number) + '</span>'
+          + '<span class="name">' + esc(say(l.title)) + '</span>'
+          + (l.text ? '<span class="zip read" data-href="read.html?l='
+              + l.page.replace(/\.html$/, "") + '" title="' + esc(say(words.textTitle) || "Read the lecture as text")
+              + '">' + esc(say(words.text) || "Text") + '</span>' : "")
+          + '<span class="go">&rarr;</span></a>');
+        if (practicals.length) {
+          rows.push('<p class="sep">' + esc(say(cfg.practicalsLabel) || "Practicals") + '</p>');
+          rows = rows.concat(practicals.map((t) => '<a class="card" href="' + t.page + '">'
+            + '<span class="num">' + esc(t.number != null ? t.number : "TP") + '</span>'
+            + '<span class="name">' + esc(say(t.title)) + '</span>'
+            + (t.zip ? '<span class="zip" data-zip="' + t.zip + '" title="'
+                + esc(say(words.archiveTitle) || "Download the code of the practical") + '">'
+                + esc(say(words.archive) || "archive") + '</span>' : "")
+            + '<span class="go">&rarr;</span></a>'));
+        }
+        if (!rows.length) rows = ['<p class="empty">No lecture yet.</p>'];
+        document.getElementById("toc").innerHTML = rows.join("");
+        // The archive and the text links live inside the card, so they must
+        // not follow it.
+        document.querySelectorAll(".zip").forEach((el) => {
+          el.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (el.dataset.zip) {
+              // A real download, the page stays where it is.
+              const a = document.createElement("a");
+              a.href = el.dataset.zip;
+              a.download = "";
+              a.click();
+            } else {
+              window.location.href = el.dataset.href;
+            }
+          });
+        });
+      }
+      render();
+      window.addEventListener("langchange", render);
+      backgroundSketch(document.getElementById("sketch"));
+    </script>
+  </body>
+</html>

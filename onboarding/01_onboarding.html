@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en" data-theme-button="off">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hackathon on-boarding</title>
+    <link rel="icon" href="favicon.svg">
+    <link rel="stylesheet" href="vendor/reveal/reveal.css">
+    <link rel="stylesheet" href="vendor/fonts/fonts.css">
+    <link rel="stylesheet" href="vendor/highlight/github-dark.css">
+    <link rel="stylesheet" href="site.css">
+    <script src="deck.config.js"></script>
+    <script src="theme-toggle.js"></script>
+    <script src="vendor/reveal/reveal.js"></script>
+  </head>
+  <body>
+    <canvas id="scene"></canvas>
+    <div class="reveal"><div class="slides"></div></div>
+    <div id="booting">…</div>
+    <script type="module">
+      import { present } from "./engine/deck.js";
+      import * as lecture from "./lectures/01_onboarding.js";
+      present(lecture).then((deck) => {
+        window.__deck = deck;
+        document.getElementById("booting").remove();
+      });
+    </script>
+  </body>
+</html>
